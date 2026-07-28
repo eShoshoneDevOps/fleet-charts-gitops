@@ -6,9 +6,9 @@ metadata:
 spec:
   project: platform
   source:
-    repoURL: https://github.com/eShoshoneDevOps/fleet-charts
-    path: network/cluster-dns
-    targetRevision: v0.1.0
+    repoURL: ghcr.io/eshoshonedevops/charts/network
+    chart: cluster-dns
+    targetRevision: 0.1.0
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd-poc-cluster-dns
