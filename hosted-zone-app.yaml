@@ -6,8 +6,8 @@ metadata:
 spec:
   project: platform
   source:
-    repoURL: ghcr.io/eshoshonedevops/charts/cloud/aws
-    chart: hosted-zone
+    repoURL: ghcr.io/eshoshonedevops
+    chart: charts/cloud/aws/hosted-zone
     targetRevision: 0.1.0
   destination:
     server: https://kubernetes.default.svc
