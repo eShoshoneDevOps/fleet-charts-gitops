@@ -6,7 +6,7 @@ metadata:
 spec:
   project: platform
   source:
-    repoURL: ghcr.io/eshoshonedevops/charts/network
+    repoURL: ghcr.io/eshoshonedevops/charts
     chart: cluster-dns
     targetRevision: 0.1.0
   destination:
