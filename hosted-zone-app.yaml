@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: poc-hosted-zone
+  namespace: argocd
+spec:
+  project: platform
+  source:
+    repoURL: https://github.com/eShoshoneDevOps/fleet-charts
+    path: cloud/aws/hosted-zone
+    targetRevision: v0.1.0
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd-poc-hosted-zone
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
