@@ -6,8 +6,8 @@ metadata:
 spec:
   project: platform
   source:
-    repoURL: ghcr.io/eshoshonedevops/charts
-    chart: network/cluster-dns
+    repoURL: ghcr.io/eshoshonedevops/charts/network
+    chart: cluster-dns
     targetRevision: 0.1.0
   destination:
     server: https://kubernetes.default.svc
