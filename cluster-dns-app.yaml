@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: ghcr.io/eshoshonedevops
     chart: charts/network/cluster-dns
-    targetRevision: 0.2.1
+    targetRevision: 0.2.2
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd-poc-cluster-dns
