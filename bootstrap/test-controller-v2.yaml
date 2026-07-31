@@ -12,11 +12,6 @@ spec:
           - matrix:
               generators:
                 - clusters:
-                    selector:
-                      matchExpressions:
-                        - key: name
-                          operator: In
-                          values: ["in-cluster"]
                     values:
                       environment: dev
                 - git:
