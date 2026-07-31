@@ -18,7 +18,7 @@ components:
       ociPath: charts/network/cluster-dns
       version: 0.2.4
     configRevision: v1.0.0
-    helmRevision: v1.0.0
+    helmRevision: v1.0.1
   case-c-git-hostedzone:
     chart:
       name: hosted-zone
