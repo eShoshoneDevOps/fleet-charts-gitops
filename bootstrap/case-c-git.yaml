@@ -39,7 +39,7 @@ spec:
           - CreateNamespace=true
       sources: []
   templatePatch: |
-    {{- $comp := index .components .values.componentKey }}
+    {{- $comp := index .components "case-c-git-hostedzone" }}
     {{- $chartVersion   := $comp.chart.version }}
     {{- $configRevision := $comp.configRevision }}
     {{- $helmRevision   := $comp.helmRevision }}
