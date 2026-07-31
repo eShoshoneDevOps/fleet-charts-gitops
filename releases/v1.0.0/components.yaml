@@ -12,6 +12,7 @@ components:
     helmRevision: v1.0.0
   case-c-oci-cluster-dns:
     chart:
+      valuesFile: releases/v1.0.0/values/cluster-dns-override.yaml
       name: cluster-dns 
       repo: ghcr.io/eshoshonedevops
       ociPath: charts/network/cluster-dns
