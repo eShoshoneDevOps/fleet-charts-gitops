@@ -10,3 +10,19 @@ components:
       version: 0.2.4
     configRevision: v1.0.0
     helmRevision: v1.0.0
+  case-c-oci-cluster-dns:
+    chart:
+      name: cluster-dns 
+      repo: ghcr.io/eshoshonedevops
+      ociPath: charts/network/cluster-dns
+      version: 0.2.4
+    configRevision: v1.0.0
+    helmRevision: v1.0.0
+  case-c-git-hostedzone:
+    chart:
+      name: hosted-zone
+      repo: https://github.com/eShoshoneDevOps/fleet-charts
+      version: main
+      path: cloud/aws/hosted-zone
+    configRevision: v1.0.0
+    helmRevision: v1.0.0

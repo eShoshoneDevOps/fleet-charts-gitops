@@ -1,0 +1,62 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: poc-case-c-oci-cluster-dns
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - matrix:
+        generators:
+          - matrix:
+              generators:
+                - clusters:
+                    values:
+                      environment: dev
+                      componentKey: case-c-oci-cluster-dns
+                - git:
+                    repoURL: https://github.com/eShoshoneDevOps/fleet-charts-gitops
+                    revision: HEAD
+                    files:
+                      - path: environments/{{ .values.environment }}/release.yaml
+          - git:
+              repoURL: https://github.com/eShoshoneDevOps/fleet-charts-gitops
+              revision: HEAD
+              files:
+                - path: releases/{{ .release }}/components.yaml
+  template:
+    metadata:
+      name: 'poc-v2-{{ .values.environment }}-{{ .values.componentKey }}'
+    spec:
+      project: platform
+      destination:
+        namespace: 'poc-v2-{{ .values.environment }}'
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
+      sources: []
+  templatePatch: |
+    {{- $comp := index .components .values.componentKey }}
+    {{- $chartVersion   := $comp.chart.version }}
+    {{- $configRevision := $comp.configRevision }}
+    {{- $helmRevision   := $comp.helmRevision }}
+    spec:
+      sources:
+        - repoURL: {{ .gitopsRepo }}
+          targetRevision: "{{ $helmRevision }}"
+          ref: values
+        {{- if hasPrefix "ghcr.io/" $comp.chart.repo }}
+        - chart: "{{ $comp.chart.ociPath }}"
+          repoURL: "{{ $comp.chart.repo }}"
+          targetRevision: "{{ $chartVersion }}"
+        {{- else }}
+        - path: "{{ index $comp.chart "path" | default "" }}"
+          repoURL: "{{ $comp.chart.repo }}"
+          targetRevision: "{{ $chartVersion }}"
+        {{- end }}
+          helm:
+            releaseName: "{{ $comp.chart.name }}"
+            ignoreMissingValueFiles: true
