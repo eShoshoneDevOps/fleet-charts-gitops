@@ -47,7 +47,7 @@ spec:
         - repoURL: {{ .gitopsRepo }}
           targetRevision: "{{ $helmRevision }}"
           ref: values
-        - path: "{{ $comp.chart.path | default "" }}"
+        - path: "{{ index $comp.chart "path" | default "" }}"
           repoURL: "{{ $comp.chart.repo }}"
           targetRevision: "{{ $chartVersion }}"
           helm:
