@@ -48,7 +48,7 @@ spec:
           targetRevision: "{{ $helmRevision }}"
           ref: values
         {{- if hasPrefix "ghcr.io/" $comp.chart.repo }}
-        - chart: "{{ $comp.chart.name }}"
+        - chart: "{{ $comp.chart.ociPath }}"
           repoURL: "{{ $comp.chart.repo }}"
           targetRevision: "{{ $chartVersion }}"
         {{- else }}
