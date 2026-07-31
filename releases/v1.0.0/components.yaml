@@ -6,6 +6,7 @@ components:
     chart:
       name: cluster-dns 
       repo: ghcr.io/eshoshonedevops
+      ociPath: charts/network/cluster-dns
       version: 0.2.4
     configRevision: v1.0.0
     helmRevision: v1.0.0
