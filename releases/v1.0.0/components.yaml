@@ -21,9 +21,10 @@ components:
     helmRevision: v1.0.1
   case-c-git-hostedzone:
     chart:
+      valuesFile: releases/v1.0.0/values/hosted-zone-override.yaml
       name: hosted-zone
       repo: https://github.com/eShoshoneDevOps/fleet-charts
       version: main
       path: cloud/aws/hosted-zone
     configRevision: v1.0.0
-    helmRevision: v1.0.0
+    helmRevision: v1.0.2

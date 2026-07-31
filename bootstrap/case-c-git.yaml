@@ -60,3 +60,5 @@ spec:
           helm:
             releaseName: "{{ $comp.chart.name }}"
             ignoreMissingValueFiles: true
+            valueFiles:
+              - "$values/{{ $comp.chart.valuesFile }}"
