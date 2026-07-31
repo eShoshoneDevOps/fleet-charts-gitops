@@ -47,9 +47,15 @@ spec:
         - repoURL: {{ .gitopsRepo }}
           targetRevision: "{{ $helmRevision }}"
           ref: values
+        {{- if hasPrefix "ghcr.io/" $comp.chart.repo }}
+        - chart: "{{ $comp.chart.name }}"
+          repoURL: "{{ $comp.chart.repo }}"
+          targetRevision: "{{ $chartVersion }}"
+        {{- else }}
         - path: "{{ index $comp.chart "path" | default "" }}"
           repoURL: "{{ $comp.chart.repo }}"
           targetRevision: "{{ $chartVersion }}"
+        {{- end }}
           helm:
             releaseName: "{{ $comp.chart.name }}"
             ignoreMissingValueFiles: true
