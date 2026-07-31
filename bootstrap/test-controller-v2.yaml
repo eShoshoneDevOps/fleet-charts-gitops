@@ -1,0 +1,60 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: poc-controller-v2-test
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - matrix:
+        generators:
+          - matrix:
+              generators:
+                - clusters:
+                    selector:
+                      matchExpressions:
+                        - key: name
+                          operator: In
+                          values: ["in-cluster"]
+                    values:
+                      environment: dev
+                - git:
+                    repoURL: https://github.com/eShoshoneDevOps/fleet-charts-gitops
+                    revision: HEAD
+                    files:
+                      - path: environments/{{ .values.environment }}/release.yaml
+          - git:
+              repoURL: https://github.com/eShoshoneDevOps/fleet-charts-gitops
+              revision: HEAD
+              files:
+                - path: releases/{{ .release }}/components.yaml
+  template:
+    metadata:
+      name: 'poc-v2-{{ .values.environment }}-{{ .name }}'
+    spec:
+      project: platform
+      destination:
+        namespace: 'poc-v2-{{ .values.environment }}'
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
+      sources: []
+  templatePatch: |
+    {{- $comp := index .components "case-a-cluster-dns" }}
+    {{- $chartVersion   := $comp.chart.version }}
+    {{- $configRevision := $comp.configRevision }}
+    {{- $helmRevision   := $comp.helmRevision }}
+    spec:
+      sources:
+        - repoURL: {{ .gitopsRepo }}
+          targetRevision: "{{ $helmRevision }}"
+          ref: values
+        - path: "{{ $comp.chart.path | default \"\" }}"
+          repoURL: "{{ $comp.chart.repo }}"
+          targetRevision: "{{ $chartVersion }}"
+          helm:
+            releaseName: "{{ $comp.chart.name }}"
+            ignoreMissingValueFiles: true

@@ -1,0 +1,11 @@
+release: v1.0.0 
+gitopsRepo: https://github.com/eShoshoneDevOps/fleet-charts-gitops
+schemaVersion: 1
+components:
+  case-a-cluster-dns:
+    chart:
+      name: cluster-dns 
+      repo: ghcr.io/eshoshonedevops
+      version: 0.2.4
+    configRevision: v1.0.0
+    helmRevision: v1.0.0
